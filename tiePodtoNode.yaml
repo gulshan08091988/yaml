@@ -1,0 +1,31 @@
+cluster:
+  clusterSpec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-type
+                  operator: In
+                  values:
+                    - node1
+                    - node2
+                    - node3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                    - voltdb-cluster
+                - key: release
+                  operator: In
+                  values:
+                    - mydb
+                - key: voltdb-cluster-name
+                  operator: In
+                  values:
+                    - mydb-voltdb-cluster
+            topologyKey: "kubernetes.io/hostname"
+
